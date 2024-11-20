@@ -51,11 +51,7 @@ Certifique-se de ter os seguintes softwares instalados em sua máquina:
 
 ### **Passos para configurar o projeto**
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/https://github.com/Isaac-code-maker/CRUD--website
-   cd nome-do-repositorio
-   ```
+1. Clone o repositório
 
 2. Instale as dependências do Laravel:
    ```bash
