@@ -32,7 +32,6 @@ Este é o repositório do projeto de um site para um escritório de advocacia, d
 ## **Tecnologias Utilizadas**
 
 - **PHP** com **Laravel** (framework principal)
-- **Bootstrap** (estilização do frontend)
 - **MySQL** (banco de dados)
 - **Blade** (motor de templates do Laravel)
 - **Composer** (gerenciador de dependências)
@@ -85,12 +84,6 @@ Certifique-se de ter os seguintes softwares instalados em sua máquina:
    php artisan migrate
    ```
 
-6. (Opcional) Instale as dependências do frontend:
-   ```bash
-   npm install
-   npm run dev
-   ```
-
 7. Inicie o servidor local:
    ```bash
    php artisan serve
@@ -139,20 +132,3 @@ Certifique-se de ter os seguintes softwares instalados em sua máquina:
 5. Abra um Pull Request.
 
 ---
-
-## **Licença**
-
-Este projeto é licenciado sob a **MIT License**. Consulte o arquivo `LICENSE` para mais informações.
-
----
-
-## **Contato**
-
-Caso tenha dúvidas ou sugestões, entre em contato:
-- **Autor**: [Seu Nome]
-- **E-mail**: seuemail@exemplo.com
-- **GitHub**: [Seu Usuário no GitHub](https://github.com/seu-usuario)
-
---- 
-
-Sinta-se à vontade para ajustar o texto acima conforme necessário!
