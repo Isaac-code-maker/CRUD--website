@@ -12,7 +12,7 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('sobre', SobreMimController::class)->only(['index', 'edit', 'update']);
+    Route::resource('sobre', SobreMimController::class)->only(['home', 'edit', 'update']);
     Route::resource('depoimentos', DepoimentoController::class);
     Route::resource('areas-atuacao', AreaAtuacaoController::class);
 });
