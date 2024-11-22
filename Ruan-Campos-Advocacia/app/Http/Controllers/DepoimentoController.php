@@ -9,10 +9,22 @@ class DepoimentoController extends Controller
 {
     public function index()
     {
-        // Obtendo todos os depoimentos
-        $depoimentos = Depoimento::all();
-        // Retorna a view com a variável $depoimentos
-        return view('admin.depoimentos.index', compact('depoimentos'));
+        try {
+            // Obtendo todos os depoimentos
+            $depoimentos = Depoimento::all();
+
+            // Verifica se há depoimentos antes de enviar para a view
+            if ($depoimentos->isEmpty()) {
+                return view('admin.depoimentos.index', compact('depoimentos'))
+                    ->withErrors(['message' => 'Nenhum depoimento encontrado.']);
+            }
+
+            // Retorna a view com a variável $depoimentos
+            return view('admin.depoimentos.index', compact('depoimentos'));
+        } catch (\Exception $e) {
+            // Caso ocorra um erro, redireciona para a página inicial com mensagem de erro
+            return redirect()->route('home')->withErrors(['message' => 'Erro ao carregar os depoimentos.']);
+        }
     }
 
     public function create()
@@ -23,8 +35,7 @@ class DepoimentoController extends Controller
 
     public function store(Request $request)
     {
-        // Validação dos campos
-        $request->validate([
+        $validatedData = $request->validate([
             'nome' => 'required|string|max:255',
             'relato' => 'required|string',
             'nota' => 'required|integer|between:1,5',
@@ -34,23 +45,26 @@ class DepoimentoController extends Controller
             'nota.required' => 'A nota é obrigatória e deve estar entre 1 e 5.',
         ]);
 
-        // Criando o novo depoimento com os dados validados
-        Depoimento::create($request->only(['nome', 'relato', 'nota']));
+        try {
+            // Criando o novo depoimento com os dados validados
+            Depoimento::create($validatedData);
 
-        // Redireciona de volta para a lista de depoimentos com mensagem de sucesso
-        return redirect()->route('depoimentos.index')->with('success', 'Depoimento adicionado.');
+            // Redireciona de volta para a lista de depoimentos com mensagem de sucesso
+            return redirect()->route('depoimentos.index')->with('success', 'Depoimento adicionado.');
+        } catch (\Exception $e) {
+            // Caso ocorra um erro, redireciona de volta com mensagem de erro
+            return back()->withErrors(['message' => 'Erro ao salvar o depoimento.']);
+        }
     }
 
     public function edit(Depoimento $depoimento)
     {
-        // Retorna a view de edição com o depoimento
         return view('admin.depoimentos.edit', compact('depoimento'));
     }
 
     public function update(Request $request, Depoimento $depoimento)
     {
-        // Validação dos campos
-        $request->validate([
+        $validatedData = $request->validate([
             'nome' => 'required|string|max:255',
             'relato' => 'required|string',
             'nota' => 'required|integer|between:1,5',
@@ -60,19 +74,29 @@ class DepoimentoController extends Controller
             'nota.required' => 'A nota é obrigatória e deve estar entre 1 e 5.',
         ]);
 
-        // Atualizando o depoimento com os dados validados
-        $depoimento->update($request->only(['nome', 'relato', 'nota']));
+        try {
+            // Atualizando o depoimento com os dados validados
+            $depoimento->update($validatedData);
 
-        // Redireciona de volta para a lista de depoimentos com mensagem de sucesso
-        return redirect()->route('depoimentos.index')->with('success', 'Depoimento atualizado.');
+            // Redireciona de volta para a lista de depoimentos com mensagem de sucesso
+            return redirect()->route('depoimentos.index')->with('success', 'Depoimento atualizado.');
+        } catch (\Exception $e) {
+            // Caso ocorra um erro, redireciona de volta com mensagem de erro
+            return back()->withErrors(['message' => 'Erro ao atualizar o depoimento.']);
+        }
     }
 
     public function destroy(Depoimento $depoimento)
     {
-        // Excluindo o depoimento
-        $depoimento->delete();
+        try {
+            // Excluindo o depoimento
+            $depoimento->delete();
 
-        // Redireciona de volta para a lista de depoimentos com mensagem de sucesso
-        return redirect()->route('depoimentos.index')->with('success', 'Depoimento removido.');
+            // Redireciona de volta para a lista de depoimentos com mensagem de sucesso
+            return redirect()->route('depoimentos.index')->with('success', 'Depoimento removido.');
+        } catch (\Exception $e) {
+            // Caso ocorra um erro, redireciona de volta com mensagem de erro
+            return back()->withErrors(['message' => 'Erro ao remover o depoimento.']);
+        }
     }
 }
