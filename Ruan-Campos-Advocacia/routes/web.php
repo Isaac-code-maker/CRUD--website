@@ -17,3 +17,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('areas-atuacao', AreaAtuacaoController::class);
 });
 
+// Exibe o formulário de login
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+
+// Efetua o login
+Route::post('login', [AuthController::class, 'login']);
+
+// Logout
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
