@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    // Credenciais fixas
+    private $email = 'admin@exemplo.com'; // E-mail fixo para login
+    private $password = 'senha123';      // Senha fixa para login
+
     // Exibe o formulário de login
     public function showLoginForm()
     {
@@ -16,35 +20,35 @@ class AuthController extends Controller
     // Lógica para efetuar o login
     public function login(Request $request)
     {
-        // Validação dos dados
+        // Valida os dados enviados
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
         ]);
 
-        // Tenta autenticar o usuário
-        if (Auth::attempt($credentials)) {
-            // Regenera a sessão
-            $request->session()->regenerate();
-
+        // Verifica se o e-mail e a senha correspondem aos valores fixos
+        if ($credentials['email'] === $this->email && $credentials['password'] === $this->password) {
+            // Autentica o usuário manualmente (ou substitua por um processo real de login)
+            Auth::loginUsingId(1);  // Aqui, 1 é o ID do usuário fictício fixo
+            
             // Redireciona para o painel administrativo
-            return redirect()->intended('admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
-        // Retorna um erro se a autenticação falhar
+        // Retorna erro caso as credenciais sejam inválidas
         return back()->with('error', 'E-mail ou senha inválidos.');
     }
 
     // Lógica para efetuar logout
     public function logout(Request $request)
     {
+        // Faz o logout do usuário
         Auth::logout();
 
-        // Invalida a sessão do usuário
+        // Invalida a sessão e regenera o token CSRF
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/login')->with('success', 'Você saiu com sucesso.');
     }
 }
-
