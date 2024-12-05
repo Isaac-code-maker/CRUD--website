@@ -7,14 +7,12 @@ use App\Http\Controllers\DepoimentoController;
 use App\Http\Controllers\AreaAtuacaoController;
 
 Route::get('/', function () {
-    return view('auth.login');  
+    return redirect()->route("login");  
 });
 
 // Rotas de autenticação
-Route::middleware(['guest'])->group(function () {
-    Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [AuthController::class, 'login']);
-});
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/do-login', [AuthController::class, 'login'])->name("do-login");
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', function () {

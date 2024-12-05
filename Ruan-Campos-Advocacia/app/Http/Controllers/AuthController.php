@@ -50,7 +50,6 @@ class AuthController extends Controller
         ]);
     }
 
-
     // Lógica para efetuar logout
     public function logout(Request $request)
     {

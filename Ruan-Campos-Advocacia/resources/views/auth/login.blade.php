@@ -8,12 +8,12 @@
 <body>
     <h1>Login</h1>
 
-    @if (session('error'))
-        <p style="color: red;">{{ session('error') }}</p>
-    @endif
-
-    <form action="{{ route('login') }}" method="POST">
+    <form action="{{ route('do-login') }}" method="POST">
         @csrf
+        @if (session('error'))
+            <p style="color: red;">{{ session('error') }}</p>
+        @endif
+
         <label for="email">E-mail:</label>
         <input type="email" name="email" id="email" required>
         <br>
