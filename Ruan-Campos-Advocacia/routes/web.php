@@ -7,14 +7,12 @@ use App\Http\Controllers\DepoimentoController;
 use App\Http\Controllers\AreaAtuacaoController;
 
 Route::get('/', function () {
-    return view('auth.login');  
+    return redirect()->route("login");  
 });
 
 // Rotas de autenticação
-Route::middleware(['guest'])->group(function () {
-    Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [AuthController::class, 'login']);
-});
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/do-login', [AuthController::class, 'login'])->name("do-login");
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', function () {
@@ -26,6 +24,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/sobre', [SobreMimController::class, 'index'])->name('sobre.index');
         Route::get('/sobre/edit', [SobreMimController::class, 'edit'])->name('sobre.edit');
         Route::put('/sobre', [SobreMimController::class, 'update'])->name('sobre.update');
+
+        
+        /*
+         * Sem essa rota dava erro pois o arquivo dashboard.blade.php pedia essa rota para funcionar
+         * TODO: implementar logout dps
+        */
+        Route::get("/logout")->name("logout");
 
         Route::resource('depoimentos', DepoimentoController::class);
         Route::resource('areas-atuacao', AreaAtuacaoController::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,9 +28,18 @@ class AuthController extends Controller
 
         // Verifica se o e-mail e a senha correspondem aos valores fixos
         if ($credentials['email'] === $this->email && $credentials['password'] === $this->password) {
-            // Autentica o usuário manualmente (ID fictício)
-            Auth::loginUsingId(1); // Certifique-se de que o ID 1 está correto
-
+            /*
+             * Author: Samuel Milhomens
+             * Description: O redirecionamento não estava ocorrendo pelo fato do do Auth::login precisar
+             * de usuario do Model User. Então o middleware não ia aceitar a autenticação feita
+             * anteriomente.
+             * 
+             * TODO: Pegar usuário dinamicamentepelo id, como no exemplo: https://github.com/Samuel-Mil/gestao-financeira-laravel
+             * Esse app acima é uma aplicacão laravel que fiz que segue uma regra de login parecida
+            */
+            $user = User::where("id", 1)->first();
+            Auth::login($user);
+            
             // Redireciona para o painel administrativo
             return redirect()->route('admin.dashboard');
         }
@@ -39,7 +49,6 @@ class AuthController extends Controller
             'email' => 'E-mail ou senha inválidos.',
         ]);
     }
-
 
     // Lógica para efetuar logout
     public function logout(Request $request)
