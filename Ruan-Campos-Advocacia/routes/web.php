@@ -27,6 +27,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/sobre/edit', [SobreMimController::class, 'edit'])->name('sobre.edit');
         Route::put('/sobre', [SobreMimController::class, 'update'])->name('sobre.update');
 
+        
+        /*
+         * Sem essa rota dava erro pois o arquivo dashboard.blade.php pedia essa rota para funcionar
+         * TODO: implementar logout dps
+        */
+        Route::get("/logout")->name("logout");
+
         Route::resource('depoimentos', DepoimentoController::class);
         Route::resource('areas-atuacao', AreaAtuacaoController::class);
     });
