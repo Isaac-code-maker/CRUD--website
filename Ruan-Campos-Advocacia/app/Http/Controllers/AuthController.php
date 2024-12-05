@@ -17,7 +17,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // Lógica para efetuar o login
     public function login(Request $request)
     {
         // Valida os dados enviados
@@ -28,16 +27,19 @@ class AuthController extends Controller
 
         // Verifica se o e-mail e a senha correspondem aos valores fixos
         if ($credentials['email'] === $this->email && $credentials['password'] === $this->password) {
-            // Autentica o usuário manualmente (ou substitua por um processo real de login)
-            Auth::loginUsingId(1);  // Aqui, 1 é o ID do usuário fictício fixo
-            
+            // Autentica o usuário manualmente (ID fictício)
+            Auth::loginUsingId(1); // Certifique-se de que o ID 1 está correto
+
             // Redireciona para o painel administrativo
             return redirect()->route('admin.dashboard');
         }
 
         // Retorna erro caso as credenciais sejam inválidas
-        return back()->with('error', 'E-mail ou senha inválidos.');
+        return back()->withInput($request->only('email'))->withErrors([
+            'email' => 'E-mail ou senha inválidos.',
+        ]);
     }
+
 
     // Lógica para efetuar logout
     public function logout(Request $request)

@@ -16,25 +16,19 @@ Route::middleware(['guest'])->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 });
 
-// Rotas protegidas por autenticação
 Route::middleware(['auth'])->group(function () {
-    // Dashboard
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    // Logout
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-
-    // Área administrativa
+    // Outras rotas administrativas
     Route::prefix('admin')->group(function () {
-        // Rotas do SobreMim
         Route::get('/sobre', [SobreMimController::class, 'index'])->name('sobre.index');
         Route::get('/sobre/edit', [SobreMimController::class, 'edit'])->name('sobre.edit');
         Route::put('/sobre', [SobreMimController::class, 'update'])->name('sobre.update');
 
-        // Outras rotas de recursos
         Route::resource('depoimentos', DepoimentoController::class);
         Route::resource('areas-atuacao', AreaAtuacaoController::class);
     });
 });
+
