@@ -46,7 +46,7 @@ class AreaAtuacaoController extends Controller
 
     public function destroy(AreaAtuacao $areaAtuacao)
     {
-        $areaAtuacao->delete();ç
+        $areaAtuacao->delete();
         return redirect()->route('areas-atuacao.index')->with('success', 'Área de atuação excluída com sucesso.');
     }
 }

@@ -16,7 +16,7 @@ class DepoimentoController extends Controller
             // Verifica se há depoimentos antes de enviar para a view
             if ($depoimentos->isEmpty()) {
                 return view('admin.depoimentos.index', compact('depoimentos'))
-                    ->withErrors(['message' => 'Nenhum depoimento encontrado.']);
+                    ->with('error', 'Nenhum depoimento encontrado.');
             }
 
             // Retorna a view com a variável $depoimentos
