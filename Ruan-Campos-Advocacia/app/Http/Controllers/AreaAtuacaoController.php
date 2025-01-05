@@ -1,64 +1,52 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\AreaAtuacao;
 use Illuminate\Http\Request;
 
 class AreaAtuacaoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $areasAtuacao = AreaAtuacao::all();
+        return view('admin.areaatuacao.index', compact('areasAtuacao'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.areaatuacao.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string',
+        ]);
+
+        AreaAtuacao::create($request->all());
+        return redirect()->route('areas-atuacao.index')->with('success', 'Área de atuação criada com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(AreaAtuacao $areaAtuacao)
     {
-        //
+        return view('admin.areaatuacao.edit', compact('areaAtuacao'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, AreaAtuacao $areaAtuacao)
     {
-        //
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string',
+        ]);
+
+        $areaAtuacao->update($request->all());
+        return redirect()->route('areas-atuacao.index')->with('success', 'Área de atuação atualizada com sucesso.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(AreaAtuacao $areaAtuacao)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $areaAtuacao->delete();ç
+        return redirect()->route('areas-atuacao.index')->with('success', 'Área de atuação excluída com sucesso.');
     }
 }

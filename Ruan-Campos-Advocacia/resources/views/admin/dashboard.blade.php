@@ -4,51 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Administrativo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        header {
-            background-color: #007BFF;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        header a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        header a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -68,6 +23,8 @@
             <li><a href="/admin/depoimentos">Gerenciar Depoimentos</a></li>
             <li><a href="/admin/areas-atuacao">Gerenciar Áreas de Atuação</a></li>
         </ul>
+
+        @yield('content')
     </main>
 
     <footer>

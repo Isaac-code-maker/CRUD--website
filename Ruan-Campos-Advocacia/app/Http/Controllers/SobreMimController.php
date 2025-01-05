@@ -9,8 +9,23 @@ class SobreMimController extends Controller
 {
     public function index()
     {
-        $sobre = SobreMim::first(); // Retorna o único registro
+        $sobre = SobreMim::first(); 
         return view('admin.sobre.index', compact('sobre'));
+    }
+
+    public function create()
+    {
+        return view('admin.sobre.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'conteudo' => 'required|string',
+        ]);
+
+        SobreMim::create($request->all());
+        return redirect()->route('sobre.index')->with('success', 'Conteúdo criado com sucesso.');
     }
 
     public function edit(SobreMim $sobreMim)
